@@ -72,33 +72,27 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 24.0,
               ),
               RoundedButton(
-                title: 'Log In',
+                title: 'Iniciar Sesión',
                 colour: Colors.lightGreen.shade700,
                 onPressed: () async {
                   setState(() {
                     showSpinner = true;
                   });
                   try {
-                    //final user = await _auth.signInWithEmailAndPassword(
-                    //    email: email, password: password);
-                    final futureUser = await fetchUser();
-                    debugPrint(futureUser.toString());
-                    //Navigator.pushNamed(context, HomeScreen.id);
+                    final futureUser = await fetchUser(email, password);
                     if (!mounted) return;
-                    //Navigator.pushReplacementNamed(context, HomeScreen.id,
-                    //  arguments: {'user': futureUser});
-                    Navigator.pushReplacementNamed(
-                      context,
-                      HomeScreen.id,
-                      arguments: {'arguments': futureUser},
-                    );
+                    if (futureUser.code == 200) {
+                      Navigator.pushReplacementNamed(
+                        context,
+                        HomeScreen.id,
+                        arguments: futureUser,
+                      );
+                    }
                     setState(() {
                       showSpinner = false;
                     });
                   } catch (e) {
-                    if (kDebugMode) {
-                      print(e);
-                    }
+                    debugPrint(e.toString());
                   }
                 },
               ),

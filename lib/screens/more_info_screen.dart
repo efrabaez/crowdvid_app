@@ -5,7 +5,7 @@ import 'package:graphic/graphic.dart';
 
 class MoreInfo extends StatefulWidget {
   const MoreInfo({Key? key}) : super(key: key);
-  static const String id = 'home_screen';
+  static const String id = 'more_info_screen';
 
   @override
   State<MoreInfo> createState() => _MoreInfoState();

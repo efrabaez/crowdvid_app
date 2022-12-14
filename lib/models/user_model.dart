@@ -6,6 +6,8 @@ class User {
   final String? lastName;
   final DateTime? createdAt;
   final DateTime? modifiedAt;
+  final int code;
+  final String message;
 
   const User({
     required this.userId,
@@ -15,22 +17,26 @@ class User {
     required this.lastName,
     required this.createdAt,
     required this.modifiedAt,
+    required this.code,
+    required this.message,
   });
 
   @override
   String toString() {
-    return '{userId: $userId, email: $email, password: $password, lastName: $lastName, created_at: $createdAt, modified_at: $modifiedAt}';
+    return '{userId: $userId, email: $email, password: $password, name: $name, lastName: $lastName, created_at: $createdAt, modified_at: $modifiedAt, code: $code, message: $message}';
   }
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-      userId: json['userId'],
-      email: json['email'],
-      password: json['password'],
-      name: json['name'],
-      lastName: json['lastName'],
-      createdAt: json['created_at'],
-      modifiedAt: json['modified_at'],
+      userId: json.containsKey('userId') ? json['userId'] : 0,
+      email: json.containsKey('email') ? json['email'] : '',
+      password: json.containsKey('password') ? json['password'] : '',
+      name: json.containsKey('name') ? json['name'] : '',
+      lastName: json.containsKey('lastname') ? json['lastname'] : '',
+      createdAt: DateTime.now(),
+      modifiedAt: DateTime.now(),
+      code: json['code'],
+      message: json['message'],
     );
   }
 }

@@ -1,12 +1,22 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:crowdvid/models/user_model.dart';
+import 'constants.dart' as constants;
 
-Future<User> fetchUser() async {
-  final response =
-      await http.get(Uri.parse('https://jsonplaceholder.typicode.com/todos/1'));
+Future<User> fetchUser(String email, String password) async {
+  final url = Uri.http(constants.apiBaseURL, constants.userLogin);
+  debugPrint(url.toString());
+  final body = json.encode({'email': email, 'password': password});
+  final response = await http.post(
+    url,
+    headers: {"Content-Type": "application/json"},
+    body: body,
+  );
+  debugPrint('Response status: ${response.statusCode}');
+  debugPrint('Response body: ${response.body}');
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,

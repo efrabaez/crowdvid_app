@@ -1,4 +1,5 @@
 import 'package:crowdvid/components/simple_card.dart';
+import 'package:crowdvid/models/user_model.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -12,9 +13,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    final arguments = (ModalRoute.of(context)?.settings.arguments ??
-        <String, dynamic>{}) as Map;
-    debugPrint('Home screen: ${arguments['arguments'].toString()}');
+    final args = ModalRoute.of(context)!.settings.arguments as User;
 
     return Scaffold(
       appBar: AppBar(
@@ -24,20 +23,20 @@ class _HomeScreenState extends State<HomeScreen> {
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
-          children: const <Widget>[
+          children: <Widget>[
             DrawerHeader(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Color(0xFF689F38),
               ),
               child: Text(
-                'Menú',
-                style: TextStyle(
+                'Bienvenido ${args.name} ${args.lastName}',
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 24,
                 ),
               ),
             ),
-            ListTile(
+            const ListTile(
               leading: Icon(Icons.calendar_month),
               title: Text(
                 'Pronósticos',
@@ -46,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            ListTile(
+            const ListTile(
               leading: Icon(Icons.account_circle),
               title: Text(
                 'Mi perfil',
