@@ -15,8 +15,8 @@ Future<User> fetchUser(String email, String password) async {
     headers: {"Content-Type": "application/json"},
     body: body,
   );
-  debugPrint('Response status: ${response.statusCode}');
-  debugPrint('Response body: ${response.body}');
+  debugPrint('Login Response status: ${response.statusCode}');
+  debugPrint('Login Response body: ${response.body}');
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
