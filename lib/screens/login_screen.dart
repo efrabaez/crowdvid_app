@@ -27,99 +27,103 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
-      body: ModalProgressHUD(
-        inAsyncCall: showSpinner,
-        child: Form(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Flexible(
-                  child: Hero(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        bottomOpacity: 0.0,
+        elevation: 0.0,
+      ),
+      body: SingleChildScrollView(
+        child: ModalProgressHUD(
+          inAsyncCall: showSpinner,
+          child: Form(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Hero(
                     tag: 'logo',
                     child: SizedBox(
                       height: 200.0,
                       child: Image.asset('images/login.png'),
                     ),
                   ),
-                ),
-                const SizedBox(
-                  height: 48.0,
-                ),
-                TextFormField(
-                  keyboardType: TextInputType.emailAddress,
-                  textAlign: TextAlign.center,
-                  onChanged: (value) {
-                    email = value.trim();
-                  },
-                  decoration: kTextFieldDecoration.copyWith(
-                    hintText: 'Ingresa tu correo electrónico',
+                  const SizedBox(
+                    height: 48.0,
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Por favor ingresa tu correo electrónico.';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(
-                  height: 8.0,
-                ),
-                TextFormField(
-                  obscureText: true,
-                  textAlign: TextAlign.center,
-                  onChanged: (value) {
-                    password = value.trim();
-                  },
-                  decoration: kTextFieldDecoration.copyWith(
-                    hintText: 'Ingresa tu contraseña',
+                  TextFormField(
+                    keyboardType: TextInputType.emailAddress,
+                    textAlign: TextAlign.center,
+                    onChanged: (value) {
+                      email = value.trim();
+                    },
+                    decoration: kTextFieldDecoration.copyWith(
+                      hintText: 'Ingresa tu correo electrónico',
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Por favor ingresa tu correo electrónico.';
+                      }
+                      return null;
+                    },
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Por favor ingresa tu contraseña.';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(
-                  height: 24.0,
-                ),
-                RoundedButton(
-                  title: 'Iniciar Sesión',
-                  colour: Colors.lightGreen.shade700,
-                  onPressed: () async {
-                    setState(() {
-                      showSpinner = true;
-                    });
-                    if (_formKey.currentState!.validate()) {
-                      try {
-                        final futureUser = await fetchUser(email, password);
-                        if (!mounted) return;
-                        if (futureUser.code == 200) {
-                          Navigator.pushReplacementNamed(
-                            context,
-                            HomeScreen.id,
-                            arguments: futureUser,
-                          );
+                  const SizedBox(
+                    height: 8.0,
+                  ),
+                  TextFormField(
+                    obscureText: true,
+                    textAlign: TextAlign.center,
+                    onChanged: (value) {
+                      password = value.trim();
+                    },
+                    decoration: kTextFieldDecoration.copyWith(
+                      hintText: 'Ingresa tu contraseña',
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Por favor ingresa tu contraseña.';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 24.0,
+                  ),
+                  RoundedButton(
+                    title: 'Iniciar Sesión',
+                    colour: Colors.lightGreen.shade700,
+                    onPressed: () async {
+                      setState(() {
+                        showSpinner = true;
+                      });
+                      if (_formKey.currentState!.validate()) {
+                        try {
+                          final futureUser = await fetchUser(email, password);
+                          if (!mounted) return;
+                          if (futureUser.code == 200) {
+                            Navigator.pushReplacementNamed(
+                              context,
+                              HomeScreen.id,
+                              arguments: futureUser,
+                            );
+                          }
+                          setState(() {
+                            showSpinner = false;
+                          });
+                        } catch (e) {
+                          debugPrint(e.toString());
                         }
+                      } else {
                         setState(() {
                           showSpinner = false;
                         });
-                      } catch (e) {
-                        debugPrint(e.toString());
                       }
-                    } else {
-                      setState(() {
-                        showSpinner = false;
-                      });
-                    }
-                  },
-                ),
-              ],
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         ),

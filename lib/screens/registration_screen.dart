@@ -29,165 +29,171 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
-      body: ModalProgressHUD(
-        inAsyncCall: showSpinner,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const <Widget>[
-                    Text(
-                      '¡Registrate ahora!',
-                      style: kTextTitleStyle,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        bottomOpacity: 0.0,
+        elevation: 0.0,
+      ),
+      body: SingleChildScrollView(
+        child: ModalProgressHUD(
+          inAsyncCall: showSpinner,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const <Widget>[
+                      Text(
+                        '¡Registrate ahora!',
+                        style: kTextTitleStyle,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 50.0),
+                  TextFormField(
+                    keyboardType: TextInputType.text,
+                    textAlign: TextAlign.center,
+                    onChanged: (value) {
+                      name = value.trim();
+                    },
+                    decoration: kTextFieldDecoration.copyWith(
+                      hintText: 'Ingresa tu(s) nombre(s)',
                     ),
-                  ],
-                ),
-                const SizedBox(height: 24.0),
-                TextFormField(
-                  keyboardType: TextInputType.text,
-                  textAlign: TextAlign.center,
-                  onChanged: (value) {
-                    name = value.trim();
-                  },
-                  decoration: kTextFieldDecoration.copyWith(
-                    hintText: 'Ingresa tu(s) nombre(s)',
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Por favor ingresa tu nombre.';
+                      }
+                      return null;
+                    },
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Por favor ingresa tu nombre.';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(
-                  height: 8.0,
-                ),
-                TextFormField(
-                  keyboardType: TextInputType.text,
-                  textAlign: TextAlign.center,
-                  onChanged: (value) {
-                    lastname = value.trim();
-                  },
-                  decoration: kTextFieldDecoration.copyWith(
-                    hintText: 'Ingresa tu(s) apellido(s)',
+                  const SizedBox(
+                    height: 8.0,
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Por favor ingresa tu apellido.';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(
-                  height: 8.0,
-                ),
-                TextFormField(
-                  keyboardType: TextInputType.emailAddress,
-                  textAlign: TextAlign.center,
-                  onChanged: (value) {
-                    email = value.trim();
-                  },
-                  decoration: kTextFieldDecoration.copyWith(
-                    hintText: 'Ingresa tu correo electrónico',
+                  TextFormField(
+                    keyboardType: TextInputType.text,
+                    textAlign: TextAlign.center,
+                    onChanged: (value) {
+                      lastname = value.trim();
+                    },
+                    decoration: kTextFieldDecoration.copyWith(
+                      hintText: 'Ingresa tu(s) apellido(s)',
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Por favor ingresa tu apellido.';
+                      }
+                      return null;
+                    },
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Por favor ingresa tu correo electrónico.';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(
-                  height: 8.0,
-                ),
-                TextFormField(
-                  obscureText: true,
-                  textAlign: TextAlign.center,
-                  onChanged: (value) {
-                    password = value.trim();
-                  },
-                  decoration: kTextFieldDecoration.copyWith(
-                    hintText: 'Ingresa tu contraseña',
+                  const SizedBox(
+                    height: 8.0,
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Por favor ingresa tu contraseña.';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(
-                  height: 24.0,
-                ),
-                RoundedButton(
-                  title: 'Registro',
-                  colour: Colors.lightGreen.shade700,
-                  onPressed: () async {
-                    setState(() {
-                      showSpinner = true;
-                    });
-                    if (_formKey.currentState!.validate()) {
-                      try {
-                        final futureUser =
-                            await createUser(email, password, name, lastname);
-                        if (!mounted) return;
-                        if (futureUser.code == 200) {
-                          Navigator.pushReplacementNamed(
-                            context,
-                            HomeScreen.id,
-                            arguments: futureUser,
-                          );
+                  TextFormField(
+                    keyboardType: TextInputType.emailAddress,
+                    textAlign: TextAlign.center,
+                    onChanged: (value) {
+                      email = value.trim();
+                    },
+                    decoration: kTextFieldDecoration.copyWith(
+                      hintText: 'Ingresa tu correo electrónico',
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Por favor ingresa tu correo electrónico.';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 8.0,
+                  ),
+                  TextFormField(
+                    obscureText: true,
+                    textAlign: TextAlign.center,
+                    onChanged: (value) {
+                      password = value.trim();
+                    },
+                    decoration: kTextFieldDecoration.copyWith(
+                      hintText: 'Ingresa tu contraseña',
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Por favor ingresa tu contraseña.';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 24.0,
+                  ),
+                  RoundedButton(
+                    title: 'Registro',
+                    colour: Colors.lightGreen.shade700,
+                    onPressed: () async {
+                      setState(() {
+                        showSpinner = true;
+                      });
+                      if (_formKey.currentState!.validate()) {
+                        try {
+                          final futureUser =
+                              await createUser(email, password, name, lastname);
+                          if (!mounted) return;
+                          if (futureUser.code == 200) {
+                            Navigator.pushReplacementNamed(
+                              context,
+                              HomeScreen.id,
+                              arguments: futureUser,
+                            );
+                          }
+                          setState(() {
+                            showSpinner = false;
+                          });
+                        } catch (e) {
+                          debugPrint(e.toString());
                         }
+                      } else {
                         setState(() {
                           showSpinner = false;
                         });
-                      } catch (e) {
-                        debugPrint(e.toString());
                       }
-                    } else {
-                      setState(() {
-                        showSpinner = false;
-                      });
-                    }
-                  },
-                ),
-                const SizedBox(
-                  height: 30.0,
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    const Text(
-                      '¿Ya tienes una cuenta?',
-                      style: TextStyle(fontSize: 16.0),
-                    ),
-                    const SizedBox(
-                      width: 10.0,
-                    ),
-                    InkWell(
-                      child: const Text(
-                        'Inicia sesión',
-                        style: TextStyle(
-                          color: Color(0xFF689F38),
-                          decoration: TextDecoration.underline,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16.0,
-                        ),
+                    },
+                  ),
+                  const SizedBox(
+                    height: 30.0,
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      const Text(
+                        '¿Ya tienes una cuenta?',
+                        style: TextStyle(fontSize: 16.0),
                       ),
-                      onTap: () => Navigator.pushReplacementNamed(
-                          context, LoginScreen.id),
-                    ),
-                  ],
-                )
-              ],
+                      const SizedBox(
+                        width: 10.0,
+                      ),
+                      InkWell(
+                        child: const Text(
+                          'Inicia sesión',
+                          style: TextStyle(
+                            color: Color(0xFF689F38),
+                            decoration: TextDecoration.underline,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.0,
+                          ),
+                        ),
+                        onTap: () => Navigator.pushReplacementNamed(
+                            context, LoginScreen.id),
+                      ),
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ),
