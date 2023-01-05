@@ -1,6 +1,9 @@
 import 'package:crowdvid/components/simple_card.dart';
+import 'package:crowdvid/models/place_model.dart';
 import 'package:crowdvid/models/user_model.dart';
 import 'package:flutter/material.dart';
+
+import 'package:crowdvid/services/get_places_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -11,6 +14,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List<Place> places = [];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _loadPlaces();
+  }
+
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as User;
@@ -57,31 +68,28 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          SimpleCard(
-              title: 'Entrada de la UPIITA',
+      body: ListView.builder(
+        itemCount: places.length,
+        itemBuilder: (context, index) {
+          return SimpleCard(
+              title: places[index].name,
               subtitle:
-                  'Los sensores se encuentran ubicados en la caseta de vigilancia.',
-              buttonTitle: 'Ver más',
+                  'Los sensores se encuentran ubicados en la entrada y salida correspondiente.',
+              buttonTitle: 'Ir a histórico',
               colour: const Color(0xff689F38),
               icon: Icons.store,
               onPressed: () {
-                debugPrint('Home_screen Pressed');
-              }),
-          SimpleCard(
-              title: 'Edificio de gobierno',
-              subtitle:
-                  'Los sensores se encuentran ubicados en los laterales de las puertas de cristal.',
-              buttonTitle: 'Ver más',
-              colour: const Color(0xff689F38),
-              icon: Icons.maps_home_work,
-              onPressed: () {
-                debugPrint('Home_screen Pressed');
-              }),
-        ],
+                debugPrint('Place id: ${places[index].placeId}');
+              });
+        },
       ),
     );
+  }
+
+  _loadPlaces() async {
+    places = await fetchPlaces();
+    setState(() {
+      places;
+    });
   }
 }
