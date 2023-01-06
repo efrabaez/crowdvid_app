@@ -1,6 +1,7 @@
 import 'package:crowdvid/components/simple_card.dart';
 import 'package:crowdvid/models/place_model.dart';
 import 'package:crowdvid/models/user_model.dart';
+import 'package:crowdvid/screens/more_info_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:crowdvid/services/get_places_service.dart';
@@ -79,7 +80,11 @@ class _HomeScreenState extends State<HomeScreen> {
               colour: const Color(0xff689F38),
               icon: Icons.store,
               onPressed: () {
-                debugPrint('Place id: ${places[index].placeId}');
+                Navigator.pushNamed(
+                  context,
+                  MoreInfo.id,
+                  arguments: places[index],
+                );
               });
         },
       ),

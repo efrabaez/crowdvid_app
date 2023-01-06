@@ -1,5 +1,5 @@
 class Place {
-  final int? placeId;
+  final int placeId;
   final String name;
 
   const Place({
