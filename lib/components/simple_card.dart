@@ -5,6 +5,8 @@ class SimpleCard extends StatelessWidget {
     super.key,
     required this.title,
     required this.subtitle,
+    required this.entrance,
+    required this.exit,
     required this.buttonTitle,
     required this.colour,
     required this.icon,
@@ -13,6 +15,8 @@ class SimpleCard extends StatelessWidget {
 
   final String title;
   final String subtitle;
+  final String entrance;
+  final String exit;
   final String buttonTitle;
   final Color colour;
   final IconData icon;
@@ -27,18 +31,35 @@ class SimpleCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             ListTile(
-              title: Text(
-                title,
-                style: const TextStyle(color: Colors.white),
-              ),
-              leading: Icon(
-                icon,
-                color: Colors.white,
+              minVerticalPadding: 8.0,
+              title: Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: Text(
+                  title,
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold),
+                ),
               ),
               subtitle: Text(
                 subtitle,
-                style: const TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white, fontSize: 15.0),
               ),
+            ),
+            const SizedBox(height: 8.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Text(
+                  entrance,
+                  style: const TextStyle(color: Colors.white, fontSize: 15.0),
+                ),
+                Text(
+                  exit,
+                  style: const TextStyle(color: Colors.white, fontSize: 15.0),
+                )
+              ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -47,10 +68,13 @@ class SimpleCard extends StatelessWidget {
                   onPressed: onPressed,
                   child: Text(
                     buttonTitle,
-                    style: const TextStyle(color: Colors.white),
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w600),
                   ),
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: 8.0),
               ],
             ),
           ],
