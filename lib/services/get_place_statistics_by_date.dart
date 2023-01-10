@@ -9,7 +9,7 @@ import 'constants.dart' as constants;
 Future<List<Statistics>> fetchPlaceStatisticsByDate(
     int placeId, String date) async {
   List<Statistics> places = [];
-  final url = Uri.http(constants.apiBaseURL, constants.placeStatisticsByDate);
+  final url = Uri.https(constants.apiBaseURL, constants.placeStatisticsByDate);
   debugPrint(url.toString());
   final body = json.encode({'place_id': placeId, 'date': date});
   final response = await http.post(

@@ -84,14 +84,14 @@ class _WelcomeScreenState extends State<WelcomeScreen>
               title: 'Iniciar sesión',
               colour: Colors.lightGreen.shade700,
               onPressed: () {
-                Navigator.pushNamed(context, LoginScreen.id);
+                Navigator.pushReplacementNamed(context, LoginScreen.id);
               },
             ),
             RoundedButton(
               title: 'Registro',
               colour: Colors.lightGreen.shade700,
               onPressed: () {
-                Navigator.pushNamed(context, RegistrationScreen.id);
+                Navigator.pushReplacementNamed(context, RegistrationScreen.id);
               },
             ),
           ],

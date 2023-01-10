@@ -9,7 +9,7 @@ import 'constants.dart' as constants;
 
 Future<User> createUser(
     String email, String password, String name, String lastname) async {
-  final url = Uri.http(constants.apiBaseURL, constants.userRegister);
+  final url = Uri.https(constants.apiBaseURL, constants.userRegister);
   debugPrint(url.toString());
   final body = json.encode(
     {'email': email, 'password': password, 'name': email, 'lastname': lastname},

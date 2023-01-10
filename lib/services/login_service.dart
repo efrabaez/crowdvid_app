@@ -7,7 +7,7 @@ import 'package:crowdvid/models/user_model.dart';
 import 'constants.dart' as constants;
 
 Future<User> fetchUser(String email, String password) async {
-  final url = Uri.http(constants.apiBaseURL, constants.userLogin);
+  final url = Uri.https(constants.apiBaseURL, constants.userLogin);
   debugPrint(url.toString());
   final body = json.encode({'email': email, 'password': password});
   final response = await http.post(

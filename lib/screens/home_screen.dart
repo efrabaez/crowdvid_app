@@ -2,6 +2,7 @@ import 'package:crowdvid/components/simple_card.dart';
 import 'package:crowdvid/models/place_model.dart';
 import 'package:crowdvid/models/user_model.dart';
 import 'package:crowdvid/screens/more_info_screen.dart';
+import 'package:crowdvid/screens/prediction_info_screen.dart';
 import 'package:crowdvid/services/get_pip_data_service.dart';
 import 'package:flutter/material.dart';
 
@@ -37,44 +38,8 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Crowdvid'),
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.lightGreen.shade700,
-      ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              decoration: const BoxDecoration(
-                color: Color(0xFF689F38),
-              ),
-              child: Text(
-                'Bienvenido ${args.name} ${args.lastName}',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                ),
-              ),
-            ),
-            const ListTile(
-              leading: Icon(Icons.calendar_month),
-              title: Text(
-                'Pronósticos',
-                style: TextStyle(
-                  fontSize: 16,
-                ),
-              ),
-            ),
-            const ListTile(
-              leading: Icon(Icons.account_circle),
-              title: Text(
-                'Mi perfil',
-                style: TextStyle(
-                  fontSize: 16,
-                ),
-              ),
-            ),
-          ],
-        ),
       ),
       body: ListView.builder(
         itemCount: places.length,
@@ -84,16 +49,23 @@ class _HomeScreenState extends State<HomeScreen> {
             subtitle:
                 'Los sensores se encuentran ubicados en la entrada y salida correspondiente.',
             entrance:
-                'Entradas: ${places[index].placeId == 1 ? schoolEntranceSensor : govtBuildingEntranceSensor}',
-            exit:
-                'Salidas: ${places[index].placeId == 1 ? schoolExitSensor : govtBuildingExitSensor}',
-            buttonTitle: 'Ir a histórico',
+                'Entradas: ${_getSensorEntranceData(places[index].placeId)}',
+            exit: 'Salidas: ${_getSensorExitData(places[index].placeId)}',
+            primaryButtonTitle: 'Ir a histórico',
+            secondaryButtonTitle: 'Ir a predicción',
             colour: const Color(0xff689F38),
             icon: Icons.store,
-            onPressed: () {
+            onPressedPrimaryButton: () {
               Navigator.pushNamed(
                 context,
                 MoreInfo.id,
+                arguments: places[index],
+              );
+            },
+            onPressedSecondaryButton: () {
+              Navigator.pushNamed(
+                context,
+                PredictionInfo.id,
                 arguments: places[index],
               );
             },
@@ -123,5 +95,13 @@ class _HomeScreenState extends State<HomeScreen> {
       govtBuildingEntranceSensor;
       govtBuildingExitSensor;
     });
+  }
+
+  int _getSensorEntranceData(int idPlace) {
+    return idPlace == 1 ? schoolEntranceSensor : govtBuildingEntranceSensor;
+  }
+
+  int _getSensorExitData(int idPlace) {
+    return idPlace == 1 ? schoolExitSensor : govtBuildingExitSensor;
   }
 }

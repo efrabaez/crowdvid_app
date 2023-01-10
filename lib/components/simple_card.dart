@@ -7,20 +7,24 @@ class SimpleCard extends StatelessWidget {
     required this.subtitle,
     required this.entrance,
     required this.exit,
-    required this.buttonTitle,
+    required this.primaryButtonTitle,
+    required this.secondaryButtonTitle,
     required this.colour,
     required this.icon,
-    required this.onPressed,
+    required this.onPressedPrimaryButton,
+    required this.onPressedSecondaryButton,
   });
 
   final String title;
   final String subtitle;
   final String entrance;
   final String exit;
-  final String buttonTitle;
+  final String primaryButtonTitle;
+  final String secondaryButtonTitle;
   final Color colour;
   final IconData icon;
-  final VoidCallback onPressed;
+  final VoidCallback onPressedPrimaryButton;
+  final VoidCallback onPressedSecondaryButton;
 
   @override
   Widget build(BuildContext context) {
@@ -65,9 +69,9 @@ class SimpleCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 TextButton(
-                  onPressed: onPressed,
+                  onPressed: onPressedPrimaryButton,
                   child: Text(
-                    buttonTitle,
+                    primaryButtonTitle,
                     style: const TextStyle(
                         color: Colors.white,
                         fontSize: 16.0,
@@ -75,6 +79,16 @@ class SimpleCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 8.0),
+                TextButton(
+                  onPressed: onPressedSecondaryButton,
+                  child: Text(
+                    secondaryButtonTitle,
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w600),
+                  ),
+                ),
               ],
             ),
           ],

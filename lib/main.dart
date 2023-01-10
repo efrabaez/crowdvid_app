@@ -1,6 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:crowdvid/screens/home_screen.dart';
 import 'package:crowdvid/screens/more_info_screen.dart';
-import 'package:flutter/material.dart';
+import 'package:crowdvid/screens/prediction_info_screen.dart';
 import 'package:crowdvid/screens/welcome_screen.dart';
 import 'package:crowdvid/screens/login_screen.dart';
 import 'package:crowdvid/screens/registration_screen.dart';
@@ -23,6 +24,7 @@ class CrowdVid extends StatelessWidget {
         RegistrationScreen.id: (context) => const RegistrationScreen(),
         HomeScreen.id: (context) => const HomeScreen(),
         MoreInfo.id: (context) => const MoreInfo(),
+        PredictionInfo.id: (context) => const PredictionInfo(),
       },
     );
   }

@@ -8,7 +8,7 @@ import 'constants.dart' as constants;
 
 Future<List<Place>> fetchPlaces() async {
   List<Place> places = [];
-  final url = Uri.http(constants.apiBaseURL, constants.allPlaces);
+  final url = Uri.https(constants.apiBaseURL, constants.allPlaces);
   debugPrint(url.toString());
   final response = await http.get(url);
   debugPrint('All Places Response status: ${response.statusCode}');

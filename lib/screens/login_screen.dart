@@ -33,10 +33,11 @@ class _LoginScreenState extends State<LoginScreen> {
         bottomOpacity: 0.0,
         elevation: 0.0,
       ),
-      body: SingleChildScrollView(
-        child: ModalProgressHUD(
-          inAsyncCall: showSpinner,
+      body: ModalProgressHUD(
+        inAsyncCall: showSpinner,
+        child: SingleChildScrollView(
           child: Form(
+            key: _formKey,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
               child: Column(
@@ -108,6 +109,16 @@ class _LoginScreenState extends State<LoginScreen> {
                               HomeScreen.id,
                               arguments: futureUser,
                             );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                duration: Duration(seconds: 3),
+                                content: Text(
+                                  'Usuario y/o contraseña incorrectos',
+                                  style: TextStyle(fontSize: 18.0),
+                                ),
+                              ),
+                            );
                           }
                           setState(() {
                             showSpinner = false;
@@ -122,6 +133,34 @@ class _LoginScreenState extends State<LoginScreen> {
                       }
                     },
                   ),
+                  const SizedBox(
+                    height: 30.0,
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      const Text(
+                        '¿Aún no tienes una cuenta?',
+                        style: TextStyle(fontSize: 16.0),
+                      ),
+                      const SizedBox(
+                        width: 10.0,
+                      ),
+                      InkWell(
+                        child: const Text(
+                          'Registrate',
+                          style: TextStyle(
+                            color: Color(0xFF689F38),
+                            decoration: TextDecoration.underline,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.0,
+                          ),
+                        ),
+                        onTap: () => Navigator.pushReplacementNamed(
+                            context, RegistrationScreen.id),
+                      ),
+                    ],
+                  )
                 ],
               ),
             ),

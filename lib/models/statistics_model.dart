@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 class Statistics {
   final int? placeId;
   final DateTime datetime;
-  final int ocupability;
+  final num ocupability;
 
   const Statistics(
       {required this.placeId,
