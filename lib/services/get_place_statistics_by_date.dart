@@ -11,7 +11,8 @@ Future<List<Statistics>> fetchPlaceStatisticsByDate(
   List<Statistics> places = [];
   final url = Uri.https(constants.apiBaseURL, constants.placeStatisticsByDate);
   debugPrint(url.toString());
-  final body = json.encode({'place_id': placeId, 'date': date});
+  final body =
+      json.encode({'place_id': placeId < 4 ? placeId : 3, 'date': date});
   final response = await http.post(
     url,
     headers: {"Content-Type": "application/json"},

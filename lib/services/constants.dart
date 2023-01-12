@@ -12,8 +12,9 @@ const String pipGovBuildingEntrance = "a5d724d1-79a8-463d-88c3-fe97dc943b0a";
 const String pipGovBuildingExit = "e3231bc1-f19a-4032-8a7f-8f4066615247";
 const String pipSchoolEntrance = "00304fd4-40bc-4205-a40d-b878169b52b3";
 const String pipSchoolExit = "fa6b6a84-59da-42e1-9f2d-6947052702cb";
-const String pipAPIKey =
-    "dG4Hk0g8Al6pAmZM+IzLJP/KRQKn5FyLeCpyj7HPi840OCtWbqY7x81Lu9Y9ZsdDxHROcMqdl+jSd/3A/IwUhQ==";
+const String pipAPIKey = "";
 //Forecast API
 const String forecastURL = "iywnhi7b0b.execute-api.us-east-1.amazonaws.com";
 const String schoolEntrancePrediction = '/dev/myForecastReal.csv';
+const String govtDataPrediction = '/dev/myForecastRealGovernment.csv';
+const String sinteticDataPrediction = '/dev/my_forecastSynthetic.csv';

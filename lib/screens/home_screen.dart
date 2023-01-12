@@ -1,6 +1,7 @@
 import 'package:crowdvid/components/simple_card.dart';
 import 'package:crowdvid/models/place_model.dart';
 import 'package:crowdvid/models/user_model.dart';
+import 'package:crowdvid/screens/login_screen.dart';
 import 'package:crowdvid/screens/more_info_screen.dart';
 import 'package:crowdvid/screens/prediction_info_screen.dart';
 import 'package:crowdvid/services/get_pip_data_service.dart';
@@ -38,6 +39,14 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Crowdvid'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.pushNamed(context, LoginScreen.id);
+            },
+            icon: const Icon(Icons.exit_to_app),
+          )
+        ],
         automaticallyImplyLeading: false,
         backgroundColor: Colors.lightGreen.shade700,
       ),
@@ -49,8 +58,9 @@ class _HomeScreenState extends State<HomeScreen> {
             subtitle:
                 'Los sensores se encuentran ubicados en la entrada y salida correspondiente.',
             entrance:
-                'Entradas: ${_getSensorEntranceData(places[index].placeId)}',
-            exit: 'Salidas: ${_getSensorExitData(places[index].placeId)}',
+                'Entradas: ${places[index].placeId > 2 ? 'Sin información' : _getSensorEntranceData(places[index].placeId)}',
+            exit:
+                'Salidas: ${places[index].placeId > 2 ? 'Sin información' : _getSensorExitData(places[index].placeId)}',
             primaryButtonTitle: 'Ir a histórico',
             secondaryButtonTitle: 'Ir a predicción',
             colour: const Color(0xff689F38),

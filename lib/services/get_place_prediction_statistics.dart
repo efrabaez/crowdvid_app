@@ -10,8 +10,19 @@ import 'constants.dart' as constants;
 Future<List<Statistics>> fetchPlacePredictionStatistics(
     int placeId, DateTime selectedDate) async {
   List<Statistics> stats = [];
-  final url =
-      Uri.https(constants.forecastURL, constants.schoolEntrancePrediction);
+  String endpoint = '';
+  switch (placeId) {
+    case 1:
+      endpoint = constants.schoolEntrancePrediction;
+      break;
+    case 2:
+      endpoint = constants.govtDataPrediction;
+      break;
+    default:
+      endpoint = constants.sinteticDataPrediction;
+      break;
+  }
+  final url = Uri.https(constants.forecastURL, endpoint);
   debugPrint(url.toString());
   final response = await http.get(url);
   final List<String> data = response.body.split("\n");

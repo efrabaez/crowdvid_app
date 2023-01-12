@@ -47,56 +47,59 @@ class _MoreInfoState extends State<MoreInfo> {
         title: Text(args.name),
         backgroundColor: Colors.lightGreen.shade700,
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          TableCalendar(
-            calendarFormat: _calendarFormat,
-            locale: 'es_MX',
-            firstDay: DateTime.utc(2022, 11, 11),
-            lastDay: DateTime.now().subtract(const Duration(days: 1)),
-            focusedDay: _focusedDay,
-            onFormatChanged: (format) {
-              setState(() {
-                _calendarFormat = format;
-              });
-            },
-            selectedDayPredicate: (day) {
-              return isSameDay(_selectedDay, day);
-            },
-            onDaySelected: (selectedDay, focusedDay) {
-              setState(() {
-                _selectedDay = selectedDay;
-                _focusedDay = focusedDay;
-                selectedDayFormatted = _dateFormat.format(_selectedDay);
-                _loadStatistics();
-              });
-            },
-          ),
-          Container(
-              margin: const EdgeInsets.only(top: 10),
-              width: 350,
-              height: 300,
-              child: SfCartesianChart(
-                  primaryXAxis: CategoryAxis(),
-                  tooltipBehavior: _tooltip,
-                  series: <ChartSeries<Statistics, String>>[
-                    ColumnSeries<Statistics, String>(
-                        dataSource: statistics,
-                        xValueMapper: (Statistics data, _) =>
-                            DateFormat('HH:mm').format(data.datetime),
-                        yValueMapper: (Statistics data, _) => data.ocupability,
-                        name: 'Gold',
-                        color: Colors.lightGreen.shade700)
-                  ])),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            TableCalendar(
+              calendarFormat: _calendarFormat,
+              locale: 'es_MX',
+              firstDay: DateTime.utc(2021, 06, 06),
+              lastDay: DateTime.now().subtract(const Duration(days: 1)),
+              focusedDay: _focusedDay,
+              onFormatChanged: (format) {
+                setState(() {
+                  _calendarFormat = format;
+                });
+              },
+              selectedDayPredicate: (day) {
+                return isSameDay(_selectedDay, day);
+              },
+              onDaySelected: (selectedDay, focusedDay) {
+                setState(() {
+                  _selectedDay = selectedDay;
+                  _focusedDay = focusedDay;
+                  selectedDayFormatted = _dateFormat.format(_selectedDay);
+                  _loadStatistics();
+                });
+              },
+            ),
+            Container(
+                margin: const EdgeInsets.only(top: 10),
+                width: 350,
+                height: 300,
+                child: SfCartesianChart(
+                    primaryXAxis: CategoryAxis(),
+                    tooltipBehavior: _tooltip,
+                    series: <ChartSeries<Statistics, String>>[
+                      ColumnSeries<Statistics, String>(
+                          dataSource: statistics,
+                          xValueMapper: (Statistics data, _) =>
+                              DateFormat('HH:mm').format(data.datetime),
+                          yValueMapper: (Statistics data, _) =>
+                              data.ocupability,
+                          name: 'Gold',
+                          color: Colors.lightGreen.shade700)
+                    ])),
+          ],
+        ),
       ),
     );
   }
 
   _loadStatistics() async {
     final int placeId = args.placeId;
-    debugPrint(args.placeId.toString());
+    debugPrint(placeId.toString());
     statistics =
         await fetchPlaceStatisticsByDate(placeId, selectedDayFormatted);
     setState(() {
